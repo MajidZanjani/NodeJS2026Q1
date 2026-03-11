@@ -1,13 +1,9 @@
-import readline from "readline";
-// entry point, sets up REPL, handles navigation state
-const rl = readline.createInterface({
-  input: process.stdin,
-  output: process.stdout,
-  prompt: "> ",
-});
+import os from "node:os";
+import { startRepl } from "./repl.js";
 
-const main = async () => {
-  console.log("Welcome to Data Processing CLI!");
-};
+const homeDir = os.homedir();
 
-await main();
+console.log("Welcome to Data Processing CLI!");
+console.log(`You are currently in ${homeDir}`);
+
+startRepl(homeDir);
