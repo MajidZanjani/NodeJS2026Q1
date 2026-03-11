@@ -1,6 +1,7 @@
 import readline from "node:readline";
 import { handleNavigation } from "./navigation.js";
 import { countCommand } from "./commands/count.js";
+import { hashCommand } from "./commands/hash.js";
 import { parseArgs } from "./utils/argParser.js";
 
 export function startRepl(initialDir) {
@@ -21,10 +22,14 @@ export function startRepl(initialDir) {
 
     try {
       let result;
+      const args = parseArgs(parts.slice(1));
       switch (command) {
         case "count":
-          const args = parseArgs(parts.slice(1));
           await countCommand(currentDir, args);
+          rl.prompt();
+          return;
+        case "hash":
+          await hashCommand(currentDir, args);
           rl.prompt();
           return;
         case ".exit":

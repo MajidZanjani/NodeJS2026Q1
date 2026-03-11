@@ -1,14 +1,17 @@
-export function parseArgs(args) {
-  const result = {};
+export function parseArgs(parts) {
+  const args = {};
+  for (let i = 0; i < parts.length; i++) {
+    if (parts[i].startsWith("--")) {
+      const key = parts[i].slice(2);
+      const next = parts[i + 1];
 
-  for (let i = 0; i < args.length; i++) {
-    if (args[i].startsWith("--")) {
-      const key = args[i].slice(2);
-      const value = args[i + 1];
-      result[key] = value;
-      i++;
+      if (next && !next.startsWith("--")) {
+        args[key] = next;
+        i++;
+      } else {
+        args[key] = true;
+      }
     }
   }
-
-  return result;
+  return args;
 }
