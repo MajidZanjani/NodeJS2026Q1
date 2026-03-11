@@ -1,5 +1,7 @@
 import readline from "node:readline";
 import { handleNavigation } from "./navigation.js";
+import { countCommand } from "./commands/count.js";
+import { parseArgs } from "./utils/argParser.js";
 
 export function startRepl(initialDir) {
   let currentDir = initialDir;
@@ -14,14 +16,23 @@ export function startRepl(initialDir) {
 
   rl.on("line", async (line) => {
     const input = line.trim();
-
-    if (input === ".exit") {
-      exit(rl);
-      return;
-    }
+    const parts = input.split(" ");
+    const command = parts[0];
 
     try {
-      const result = await handleNavigation(input, currentDir);
+      let result;
+      switch (command) {
+        case "count":
+          const args = parseArgs(parts.slice(1));
+          await countCommand(currentDir, args);
+          rl.prompt();
+          return;
+        case ".exit":
+          exit(rl);
+          return;
+        default:
+          result = await handleNavigation(input, currentDir);
+      }
 
       if (result?.newDir) {
         currentDir = result.newDir;
