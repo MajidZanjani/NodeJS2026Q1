@@ -35,8 +35,6 @@ export async function hashCompareCommand(currentDir, args) {
   await pipeline(fs.createReadStream(file), hashStream);
   const digest = hash.digest("hex");
   const savedHash = await readFile(hashFile, { encoding: "utf8" });
-  console.log(digest);
-  console.log(savedHash);
 
   console.log(digest == savedHash ? "OK" : "MISMATCH");
 }

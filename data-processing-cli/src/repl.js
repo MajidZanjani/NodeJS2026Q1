@@ -4,6 +4,8 @@ import { countCommand } from "./commands/count.js";
 import { hashCommand } from "./commands/hash.js";
 import { hashCompareCommand } from "./commands/hashCompare.js";
 import { parseArgs } from "./utils/argParser.js";
+import { csvToJsonCommand } from "./commands/csvToJson.js";
+import { jsonToCsvCommand } from "./commands/jsonToCsv.js";
 
 export function startRepl(initialDir) {
   let currentDir = initialDir;
@@ -35,6 +37,14 @@ export function startRepl(initialDir) {
           return;
         case "hash-compare":
           await hashCompareCommand(currentDir, args);
+          rl.prompt();
+          return;
+        case "csv-to-json":
+          await csvToJsonCommand(currentDir, args);
+          rl.prompt();
+          return;
+        case "json-to-csv":
+          await jsonToCsvCommand(currentDir, args);
           rl.prompt();
           return;
         case ".exit":
