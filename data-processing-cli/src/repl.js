@@ -8,6 +8,7 @@ import { csvToJsonCommand } from "./commands/csvToJson.js";
 import { jsonToCsvCommand } from "./commands/jsonToCsv.js";
 import { encryptCommand } from "./commands/encrypt.js";
 import { decryptCommand } from "./commands/decrypt.js";
+import { logStatsCommand } from "./commands/logStats.js";
 
 export function startRepl(initialDir) {
   let currentDir = initialDir;
@@ -55,6 +56,10 @@ export function startRepl(initialDir) {
           return;
         case "decrypt":
           await decryptCommand(currentDir, args);
+          rl.prompt();
+          return;
+        case "log-stats":
+          await logStatsCommand(currentDir, args);
           rl.prompt();
           return;
         case ".exit":
