@@ -6,6 +6,8 @@ import { hashCompareCommand } from "./commands/hashCompare.js";
 import { parseArgs } from "./utils/argParser.js";
 import { csvToJsonCommand } from "./commands/csvToJson.js";
 import { jsonToCsvCommand } from "./commands/jsonToCsv.js";
+import { encryptCommand } from "./commands/encrypt.js";
+import { decryptCommand } from "./commands/decrypt.js";
 
 export function startRepl(initialDir) {
   let currentDir = initialDir;
@@ -45,6 +47,14 @@ export function startRepl(initialDir) {
           return;
         case "json-to-csv":
           await jsonToCsvCommand(currentDir, args);
+          rl.prompt();
+          return;
+        case "encrypt":
+          await encryptCommand(currentDir, args);
+          rl.prompt();
+          return;
+        case "decrypt":
+          await decryptCommand(currentDir, args);
           rl.prompt();
           return;
         case ".exit":
